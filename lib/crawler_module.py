@@ -3,6 +3,9 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
+import plotly.express as px
+import pandas as pd
+import streamlit as st
 
 # WebDriver 초기화 함수
 def initialize_driver(chromedriver_path='./chromedriver'):
@@ -87,3 +90,10 @@ def preprocess_data(data):
         if min_co2_details:
             preprocessed_data[website] = {min_co2_details['link']: min_co2_details}
     return preprocessed_data
+
+def visualize_data(datasizeoftype):
+    mean_values = pd.DataFrame(datasizeoftype.items(), columns=['resource', 'average_usage'])
+    
+    fig = px.bar(mean_values, x='resource', y='average_usage', 
+                 title='자원별 평균 사용량', labels={'average_usage': '평균 사용량', 'resource': '자원'})
+    st.plotly_chart(fig)

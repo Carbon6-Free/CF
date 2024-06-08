@@ -9,6 +9,8 @@ import pickle
 from style import set_style
 from info import display_random_info
 
+
+
 API_KEY=os.getenv("firebasekey")
 firebase=firebase.FirebaseApplication(API_KEY, None)
 with open("./cutoff.txt", 'rb') as lf:
@@ -67,3 +69,6 @@ if st.button("View results"):
         resized_image = image.resize((100, 100))
         st.image(resized_image, use_column_width=True)
         st.write("g of CO2: " ,datasize["g of CO2"])
+
+    if datasize:
+        visualize_data(datasize)
