@@ -4,7 +4,7 @@ import json
 from lib.crawler_module import preprocess_data
 import pickle
 
-filePath = './cutoff.txt'
+filePath = './../cutoff.txt'
 
 with open('carbonfree.json') as f:
     data = json.load(f)
