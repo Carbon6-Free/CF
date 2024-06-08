@@ -41,33 +41,27 @@ if st.button("View results"):
 
     if datasize["g of CO2"] <= cutoff[0]:
         image = Image.open('./assets/A+.png')
-        resized_image = image.resize((100, 100))
-        st.image(resized_image, use_column_width=True)
+        st.image(image, width=200)
         st.write("g of CO2: " , datasize["g of CO2"])
     elif datasize["g of CO2"] <= cutoff[1]:
         image = Image.open('./assets/A.png')
-        resized_image = image.resize((100, 100))
-        st.image(resized_image, use_column_width=True)
+        st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
     elif datasize["g of CO2"] <= cutoff[2]:
         image = Image.open('./assets/B.png')
-        resized_image = image.resize((100, 100))
-        st.image(resized_image, use_column_width=True)
+        st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
     elif datasize["g of CO2"] <= cutoff[3]:
         image = Image.open('./assets/C.png')
-        resized_image = image.resize((100, 100))
-        st.image(resized_image, use_column_width=True)
+        st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
     elif datasize["g of CO2"] <= cutoff[4]:
         image = Image.open('./assets/D.png')
-        resized_image = image.resize((100, 100))
-        st.image(resized_image, use_column_width=True)
+        st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
     else:
         image = Image.open('./assets/F.png')
-        resized_image = image.resize((100, 100))
-        st.image(resized_image, use_column_width=True)
+        st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
 
     if datasize:
