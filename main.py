@@ -57,34 +57,28 @@ if st.button("View results"):
 
     if datasize["g of CO2"] <= cutoff[0]:
         image = Image.open('./assets/A+.png')
-        st.image(image, width=200)
-        st.write("g of CO2: " , datasize["g of CO2"])
         tier = "A+"
     elif datasize["g of CO2"] <= cutoff[1]:
         image = Image.open('./assets/A.png')
-        st.image(image, width=200)
-        st.write("g of CO2: " ,datasize["g of CO2"])
         tier = "A"
     elif datasize["g of CO2"] <= cutoff[2]:
         image = Image.open('./assets/B.png')
-        st.image(image, width=200)
-        st.write("g of CO2: " ,datasize["g of CO2"])
         tier = "B"
     elif datasize["g of CO2"] <= cutoff[3]:
         image = Image.open('./assets/C.png')
-        st.image(image, width=200)
-        st.write("g of CO2: " ,datasize["g of CO2"])
         tier = "C"
     elif datasize["g of CO2"] <= cutoff[4]:
         image = Image.open('./assets/D.png')
-        st.image(image, width=200)
-        st.write("g of CO2: " ,datasize["g of CO2"])
         tier = "D"
     else:
         image = Image.open('./assets/F.png')
-        st.image(image, width=200)
-        st.write("g of CO2: " ,datasize["g of CO2"])
         tier = "F"
+
+    st.write("링크를 한번 방문할떄마다 " , datasize["g of CO2"], "g의 탄소가 발생합니다.")
+    
+    st.image(image, width=200)
+
+
 
     if datasize:
         del datasize['g of CO2']
