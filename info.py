@@ -43,6 +43,18 @@ info = [
     "기념일에 내(가족) 나무 심어 보기"
 ]
 
+def carbon_info(carbon_g):
+    if carbon_g < 1:
+        pass
+    elif carbon_g < 10:
+        st.write("링크 10회 방문시 형광등 40분을 사용한 탄소가 발생됩니다.")
+    elif carbon_g < 20:
+        st.write("링크 10회 방문시 형광등 80분을 사용한 탄소가 발생됩니다.")
+    elif carbon_g < 60:
+        st.write("링크 10회 방문시 컴퓨터 4시간동안 사용한 탄소가 발생합니다.")
+    elif carbon_g < 80:
+        st.write("링크 10회 방문시 전자레인지를 30분동안 사용한 탄소가 발생합니다.")
+
 def display_random_info():
     selected_info = random.choice(info)
     st.markdown(

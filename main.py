@@ -7,7 +7,7 @@ from PIL import Image
 import os
 import pickle
 from style import set_style
-from info import display_random_info
+from info import display_random_info, carbon_info
 import json
 from lib.graph import *
 
@@ -40,11 +40,13 @@ sorted_df = df.sort_values(by='CO2')
 datasets = convert_carbon_bound(sorted_df)
 
 tier = ""
+carbon_g = 0
 
 # View results button
 if st.button("View results"):
     log, datasize = get_json_data(search_query)
-    datasize["g of CO2"] = annual_carborn(log[-1]["Size"])
+    # datasize["g of CO2"] = annual_carborn(log[-1]["Size"])
+    carbon_g = annual_carborn(log[-1]["Size"])
     # Storing and retrieving data in Firebase
     match = re.search(r'(?<=://)(.*?)(?=/|$)', search_query)  # 도메인 이름 추출을 위한 정규표현식
     if match:
@@ -55,32 +57,33 @@ if st.button("View results"):
     firebase.post(f'{modified_domain}/', datasize)
     #result = firebase.get(f'/{modified_domain}', '')
 
-    if datasize["g of CO2"] <= cutoff[0]:
+    if carbon_g <= cutoff[0]:
         image = Image.open('./assets/A+.png')
         tier = "A+"
-    elif datasize["g of CO2"] <= cutoff[1]:
+    elif carbon_g <= cutoff[1]:
         image = Image.open('./assets/A.png')
         tier = "A"
-    elif datasize["g of CO2"] <= cutoff[2]:
+    elif carbon_g <= cutoff[2]:
         image = Image.open('./assets/B.png')
         tier = "B"
-    elif datasize["g of CO2"] <= cutoff[3]:
+    elif carbon_g <= cutoff[3]:
         image = Image.open('./assets/C.png')
         tier = "C"
-    elif datasize["g of CO2"] <= cutoff[4]:
+    elif carbon_g <= cutoff[4]:
         image = Image.open('./assets/D.png')
         tier = "D"
     else:
         image = Image.open('./assets/F.png')
         tier = "F"
 
-    st.write("링크를 한번 방문할떄마다 " , datasize["g of CO2"], "g의 탄소가 발생합니다.")
-    
+    st.write("링크를 한번 방문할떄마다 " , carbon_g, "g의 탄소가 발생합니다.")
+
+    carbon_info(carbon_g * 10)
     st.image(image, width=200)
 
 
 
     if datasize:
-        del datasize['g of CO2']
+        # del datasize['g of CO2']
         plot_comparison(datasets, datasize, search_query, tier)
         # visualize_data(datasize)
