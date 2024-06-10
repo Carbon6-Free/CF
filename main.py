@@ -8,8 +8,11 @@ import os
 import pickle
 from style import set_style
 from info import display_random_info
+import json
+from lib.graph import *
 
-
+with open('carbonfree.json') as f:
+    data = json.load(f)
 
 API_KEY=os.getenv("firebasekey")
 firebase=firebase.FirebaseApplication(API_KEY, None)
@@ -24,6 +27,19 @@ search_query = st.text_input(label='url', value='')  # Entered URL address
 
 # Display the random information
 display_random_info()
+
+# Change dataframe
+data = preprocess_data(data)
+df = pd.DataFrame([(website, detail_id, detail_data['css'], detail_data['fetch'], detail_data['g of CO2'], detail_data['img'], detail_data['link'], detail_data['script'], detail_data['video']) 
+                   for website, details in data.items() 
+                   for detail_id, detail_data in details.items()], 
+                  columns=['Website', 'Detail ID', 'CSS', 'Fetch', 'CO2', 'Img', 'Link', 'Script', 'Video'])
+
+df = df[df['CO2'] != 0]
+sorted_df = df.sort_values(by='CO2')
+datasets = convert_carbon_bound(sorted_df)
+
+tier = ""
 
 # View results button
 if st.button("View results"):
@@ -43,26 +59,34 @@ if st.button("View results"):
         image = Image.open('./assets/A+.png')
         st.image(image, width=200)
         st.write("g of CO2: " , datasize["g of CO2"])
+        tier = "A+"
     elif datasize["g of CO2"] <= cutoff[1]:
         image = Image.open('./assets/A.png')
         st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
+        tier = "A"
     elif datasize["g of CO2"] <= cutoff[2]:
         image = Image.open('./assets/B.png')
         st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
+        tier = "B"
     elif datasize["g of CO2"] <= cutoff[3]:
         image = Image.open('./assets/C.png')
         st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
+        tier = "C"
     elif datasize["g of CO2"] <= cutoff[4]:
         image = Image.open('./assets/D.png')
         st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
+        tier = "D"
     else:
         image = Image.open('./assets/F.png')
         st.image(image, width=200)
         st.write("g of CO2: " ,datasize["g of CO2"])
+        tier = "F"
 
     if datasize:
-        visualize_data(datasize)
+        del datasize['g of CO2']
+        plot_comparison(datasets, datasize, search_query, tier)
+        # visualize_data(datasize)
