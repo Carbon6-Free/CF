@@ -90,10 +90,3 @@ def preprocess_data(data):
         if min_co2_details:
             preprocessed_data[website] = {min_co2_details['link']: min_co2_details}
     return preprocessed_data
-
-def visualize_data(datasizeoftype):
-    mean_values = pd.DataFrame(datasizeoftype.items(), columns=['resource', 'average_usage'])
-    
-    fig = px.bar(mean_values, x='resource', y='average_usage', 
-                 title='자원별 평균 사용량', labels={'average_usage': '평균 사용량', 'resource': '자원'})
-    st.plotly_chart(fig)
