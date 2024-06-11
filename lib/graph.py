@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+import plotly.graph_objects as go
 
 def preprocess_data(data):
     preprocessed_data = {}
@@ -58,4 +59,39 @@ def plot_comparison(datasets, new_data, search, tier):
                  labels={'average_usage': '평균 사용량', 'resource': '자원', 'label': '데이터셋'})
     fig.for_each_trace(lambda trace: trace.update(visible='legendonly'))
     fig.for_each_trace(lambda trace: trace.update(visible=True) if trace.name == tier or trace.name == search else trace)
+    st.plotly_chart(fig)
+
+# 단일 데이터에 대한 그래프
+def visualize_data(datasizeoftype):
+    mean_values = pd.DataFrame(datasizeoftype.items(), columns=['resource', 'average_usage'])
+    
+    fig = px.bar(mean_values, x='resource', y='average_usage', 
+                 title='자원별 평균 사용량', labels={'average_usage': '평균 사용량', 'resource': '자원'})
+    st.plotly_chart(fig)
+
+# 구간별 카본 사용 Icicle Charts 예시
+def plot_carbon_activities():
+    fig =go.Figure(go.Icicle(
+    ids=["Sports",
+        "North America", "Europe", "Australia", "North America - Football", "Soccer",
+        "North America - Rugby", "Europe - Football", "Rugby",
+        "Europe - American Football","Australia - Football", "Association",
+        "Australian Rules", "Autstralia - American Football", "Australia - Rugby",
+        "Rugby League", "Rugby Union"
+    ],
+    labels= ["Sports",
+        "North<br>America", "Europe", "Australia", "Football", "Soccer", "Rugby",
+        "Football", "Rugby", "American<br>Football", "Football", "Association",
+        "Australian<br>Rules", "American<br>Football", "Rugby", "Rugby<br>League",
+        "Rugby<br>Union"
+    ],
+    parents=["",
+        "Sports", "Sports", "Sports", "North America", "North America", "North America", "Europe",
+        "Europe", "Europe","Australia", "Australia - Football", "Australia - Football",
+        "Australia - Football", "Australia - Football", "Australia - Rugby",
+        "Australia - Rugby"
+    ],
+        root_color="lightgrey"
+    ))
+    fig.update_layout(margin = dict(t=50, l=25, r=25, b=25))
     st.plotly_chart(fig)
