@@ -45,7 +45,6 @@ carbon_g = 0
 # View results button
 if st.button("View results"):
     log, datasize = get_json_data(search_query)
-    # datasize["g of CO2"] = annual_carborn(log[-1]["Size"])
     carbon_g = annual_carborn(log[-1]["Size"])
     # Storing and retrieving data in Firebase
     match = re.search(r'(?<=://)(.*?)(?=/|$)', search_query)  # 도메인 이름 추출을 위한 정규표현식
@@ -55,7 +54,6 @@ if st.button("View results"):
         print(modified_domain)
 
     firebase.post(f'{modified_domain}/', datasize)
-    #result = firebase.get(f'/{modified_domain}', '')
 
     if carbon_g <= cutoff[0]:
         image = Image.open('./assets/A+.png')
@@ -81,9 +79,5 @@ if st.button("View results"):
     carbon_info(carbon_g * 10)
     st.image(image, width=200)
 
-
-
     if datasize:
-        # del datasize['g of CO2']
         plot_comparison(datasets, datasize, search_query, tier)
-        # visualize_data(datasize)

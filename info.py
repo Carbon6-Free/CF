@@ -50,10 +50,21 @@ def carbon_info(carbon_g):
         st.write("링크 10회 방문시 형광등 40분을 사용한 탄소가 발생됩니다.")
     elif carbon_g < 20:
         st.write("링크 10회 방문시 형광등 80분을 사용한 탄소가 발생됩니다.")
+    elif carbon_g < 30:
+        st.write("링크 10회 방문시 TV를 30분동안 사용한 탄소가 발생됩니다.")
+    elif carbon_g < 40:
+        st.write("링크 10회 방문시 스마트폰을 2시간동안 사용한 탄소가 발생됩니다.")
+    elif carbon_g < 50:
+        st.write("링크 10회 방문시 에어컨을 15분동안 사용한 탄소가 발생됩니다.")
     elif carbon_g < 60:
         st.write("링크 10회 방문시 컴퓨터 4시간동안 사용한 탄소가 발생합니다.")
+    elif carbon_g < 70:
+        st.write("링크 10회 방문시 세탁기를 20분동안 사용한 탄소가 발생합니다.")
     elif carbon_g < 80:
         st.write("링크 10회 방문시 전자레인지를 30분동안 사용한 탄소가 발생합니다.")
+    elif carbon_g > 100:
+        st.write(f"링크 10회 방문시 발생되는 탄소는 약 {int(carbon_g)}g 입니다. 차로 2.5km를 이동했을때 발생되는 탄소는 560g 입니다.")
+
 
 def display_random_info():
     selected_info = random.choice(info)
