@@ -60,7 +60,7 @@ def carbon_info(carbon_g):
         st.image('./assets/phone.png', width=200)
         st.write("링크 10회 방문시 스마트폰을 2시간동안 사용한 탄소가 발생됩니다.")
     elif carbon_g < 50:
-        st.image('./assets/air.png', width=200)
+        st.image('./assets/aircon.png', width=200)
         st.write("링크 10회 방문시 에어컨을 15분동안 사용한 탄소가 발생됩니다.")
     elif carbon_g < 60:
         st.image('./assets/com4.png', width=200)
