@@ -45,7 +45,7 @@ def set_style():
                 color: var(--text-color) !important;
             }}
             .stTextInput>div>div>input {{
-                color: var(--text-color) !important;
+                color: {('#000000' if st.session_state['bg_color'] == '#000000' else 'var(--text-color)')} !important;
             }}
             .stButton>button {{
                 background-color: var(--button-bg-color) !important;
