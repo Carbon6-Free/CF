@@ -1,19 +1,19 @@
-from firebase import firebase
 import streamlit as st
 from lib.crawler_module import *
 from lib.network_carborn import *
-import re
-from PIL import Image
-import os
-import pickle
-from style import set_style
-from info import display_random_info, carbon_info
-import json
 from lib.graph import *
+from carbon_track import CarbonTrack
+
+ct = CarbonTrack('cocl-pm-firebase.json', 'https://cocl-pm-default-rtdb.firebaseio.com/', 'True')
+ct.collect()
+
+log = ct.getdata(local=True)
+mem = round(log['memory_usage'] * 100)
+pwr = round(log['power_usage'] * 100)
 
 # CPU 도넛 차트
 cpu_fig = go.Figure(go.Pie(
-    values=[20, 80],
+    values=[mem, 100-mem],
     hole=0.6,
     marker=dict(colors=['#FF6361', 'rgba(0,0,0,0)'])  # 나머지 부분을 투명하게 설정
 ))
@@ -26,7 +26,7 @@ cpu_fig.update_layout(
 
 # GPU 도넛 차트
 gpu_fig = go.Figure(go.Pie(
-    values=[40, 60],
+    values=[pwr, 60],
     hole=0.6,
     marker=dict(colors=['#FFA600', 'rgba(0,0,0,0)'])  # 나머지 부분을 투명하게 설정
 ))

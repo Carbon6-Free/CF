@@ -22,8 +22,6 @@ firebase=firebase.FirebaseApplication(API_KEY, None)
 with open("./cutoff.txt", 'rb') as lf:
     cutoff = pickle.load(lf)
 
-
-
 # Apply the style settings
 set_style()
 
@@ -80,8 +78,6 @@ if st.button("View results"):
         tier = "F"
 
     st.write("링크를 한번 방문할떄마다 " , carbon_g, "g의 탄소가 발생합니다.")
-
-    
 
     carbon_info(carbon_g * 10)
     st.image(image, width=200)
