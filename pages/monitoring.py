@@ -19,7 +19,7 @@ cpu_fig = go.Figure(go.Pie(
 ))
 cpu_fig.update_layout(
     showlegend=False,
-    annotations=[dict(text='CPU', x=0.5, y=0.5, font_size=20, showarrow=False)],
+    annotations=[dict(text='GPU', x=0.5, y=0.5, font_size=20, showarrow=False)],
     width=300, 
     height=300
 )
@@ -32,7 +32,7 @@ gpu_fig = go.Figure(go.Pie(
 ))
 gpu_fig.update_layout(
     showlegend=False,
-    annotations=[dict(text='GPU', x=0.5, y=0.5, font_size=20, showarrow=False)],
+    annotations=[dict(text='Power', x=0.5, y=0.5, font_size=20, showarrow=False)],
     width=300, 
     height=300
 )
