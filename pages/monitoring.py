@@ -4,44 +4,51 @@ from lib.network_carborn import *
 from lib.graph import *
 from carbon_track import CarbonTrack
 
+image_path = "./pic/multipc.png"
 ct = CarbonTrack('cocl-pm-firebase.json', 'https://cocl-pm-default-rtdb.firebaseio.com/', 'True')
 ct.collect()
 
-log = ct.getdata(local=True)
-mem = round(log['memory_usage'] * 100)
-pwr = round(log['power_usage'] * 100)
+log = ct.getdata()
+n_pcs = len(log)
 
-# CPU 도넛 차트
-cpu_fig = go.Figure(go.Pie(
-    values=[mem, 100-mem],
-    hole=0.6,
-    marker=dict(colors=['#FF6361', 'rgba(0,0,0,0)'])  # 나머지 부분을 투명하게 설정
-))
-cpu_fig.update_layout(
-    showlegend=False,
-    annotations=[dict(text='GPU', x=0.5, y=0.5, font_size=20, showarrow=False)],
-    width=300, 
-    height=300
-)
+max_cols = 3
+n_rows = (n_pcs + max_cols - 1) // max_cols
 
-# GPU 도넛 차트
-gpu_fig = go.Figure(go.Pie(
-    values=[pwr, 60],
-    hole=0.6,
-    marker=dict(colors=['#FFA600', 'rgba(0,0,0,0)'])  # 나머지 부분을 투명하게 설정
-))
-gpu_fig.update_layout(
-    showlegend=False,
-    annotations=[dict(text='Power', x=0.5, y=0.5, font_size=20, showarrow=False)],
-    width=300, 
-    height=300
-)
+for idx, (pc_id, pc_data) in enumerate(log.items()):
+    mem = round(pc_data['memory_usage'] * 100)
+    pwr = round(pc_data['power_usage'] * 100)
 
-# 도넛차트 추가
-# Streamlit에 양옆 배치
-col1, col2 = st.columns(2)
-with col1:
-    st.plotly_chart(cpu_fig)
+    mem_fig = go.Figure(go.Pie(
+        values=[mem, 100-mem],
+        hole=0.6,
+        marker=dict(colors=['#FF6361', 'rgba(0,0,0,0)'])
+    ))
+    mem_fig.update_layout(
+        showlegend=False,
+        annotations=[dict(text='Memory', x=0.5, y=0.5, font_size=20, showarrow=False)],
+        width=300, 
+        height=300
+    )
 
-with col2:
-    st.plotly_chart(gpu_fig)
+    pwr_fig = go.Figure(go.Pie(
+        values=[pwr, 100-pwr],
+        hole=0.6,
+        marker=dict(colors=['#FFA600', 'rgba(0,0,0,0)'])
+    ))
+    pwr_fig.update_layout(
+        showlegend=False,
+        annotations=[dict(text='Power', x=0.5, y=0.5, font_size=20, showarrow=False)],
+        width=300, 
+        height=300
+    )
+
+    col1, col2, col3 = st.columns(3)  # (이미지, 메모리, 전력)
+    
+    with col1:
+        st.image(image_path, caption=f"PC {idx+1}", use_column_width=True)
+
+    with col2:
+        st.plotly_chart(mem_fig)
+
+    with col3:
+        st.plotly_chart(pwr_fig)

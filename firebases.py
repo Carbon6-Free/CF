@@ -16,10 +16,11 @@ class FirebaseManager:
 
     def __init__(self, json_file_path, database_url):
         # Firebase database init
-        self.config = credentials.Certificate(json_file_path)
-        self.app = firebase_admin.initialize_app (self.config, {
-            'databaseURL' : database_url
-        })
+        if not firebase_admin._apps:
+            self.config = credentials.Certificate(json_file_path)
+            self.app = firebase_admin.initialize_app (self.config, {
+                'databaseURL' : database_url
+            })
 
         self.db = firestore.client()
 

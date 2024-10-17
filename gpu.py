@@ -46,7 +46,7 @@ class GPUInfo:
         result = subprocess.check_output(command, shell=True, universal_newlines=True)
 
         # result parsing
-        power_draw = float(result.strip()) / 100.0  # Convert to kW
+        power_draw = float(result.strip()) / 10.0  # Convert to kW
 
         if self.default_gpu_usage is not None:
             power_draw -= self.default_gpu_usage
