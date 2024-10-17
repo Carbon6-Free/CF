@@ -14,6 +14,8 @@ n_pcs = len(log)
 max_cols = 3
 n_rows = (n_pcs + max_cols - 1) // max_cols
 
+st.title("Tracking dashboard")
+
 for idx, (pc_id, pc_data) in enumerate(log.items()):
     mem = round(pc_data['memory_usage'] * 100)
     pwr = round(pc_data['power_usage'] * 100)
