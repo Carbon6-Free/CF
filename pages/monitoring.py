@@ -18,7 +18,7 @@ st.title("Tracking dashboard")
 
 for idx, (pc_id, pc_data) in enumerate(log.items()):
     mem = round(pc_data['memory_usage'] * 100)
-    pwr = round(pc_data['power_usage'] * 100)
+    pwr = round(pc_data['power_usage'])
 
     mem_fig = go.Figure(go.Pie(
         values=[mem, 100-mem],

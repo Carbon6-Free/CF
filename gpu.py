@@ -46,7 +46,7 @@ class GPUInfo:
         result = subprocess.check_output(command, shell=True, universal_newlines=True)
 
         # result parsing
-        power_draw = float(result.strip()) / 10.0  # Convert to kW
+        power_draw = float(result.strip())
 
         if self.default_gpu_usage is not None:
             power_draw -= self.default_gpu_usage
@@ -71,4 +71,4 @@ class GPUInfo:
         gpu_power = int(power_match.group(1)) if power_match else None
         gpu_usage = round(100 - idle_residency, 2) if idle_residency is not None else None
 
-        return gpu_usage, gpu_power*0.1
+        return gpu_usage, gpu_power*0.01
