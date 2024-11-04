@@ -3,3 +3,8 @@
 /__pycache__
 /lib/__pycache__
 cocl-pm-firebase.json
+.DS_Store
+elec.csv
+/elec
+*.png
+/structured_data_regressor
