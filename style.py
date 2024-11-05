@@ -15,6 +15,10 @@ def set_style():
         st.session_state['bg_color'] = '#000000'
         st.session_state['text_color'] = '#FFFFFF'
 
+    # Determine input text color and background color for link input
+    input_text_color = '#FFFFFF' if st.session_state['bg_color'] == '#000000' else '#000000'
+    input_bg_color = '#000000' if st.session_state['bg_color'] == '#000000' else '#FFFFFF'
+
     # Apply background color and additional styles using CSS
     st.markdown(
         f"""
@@ -33,9 +37,9 @@ def set_style():
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
-                background-color: var(--bg_color);
-                color: var(--text_color);
-                border: 2px solid var(--text_color);
+                background-color: var(--bg-color);
+                color: var(--text-color);
+                border: 2px solid var(--text-color);
                 padding: 10px;
                 border-radius: 10px;
                 box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
@@ -44,8 +48,10 @@ def set_style():
             label, .st-c3, .st-c4 {{
                 color: var(--text-color) !important;
             }}
+            /* Updated input text and background color based on dark mode */
             .stTextInput>div>div>input {{
-                color: {('#000000' if st.session_state['bg_color'] == '#000000' else 'var(--text-color)')} !important;
+                color: {input_text_color} !important;
+                background-color: {input_bg_color} !important;
             }}
             .stButton>button {{
                 background-color: var(--button-bg-color) !important;
@@ -60,3 +66,12 @@ def set_style():
     st.markdown(
         f"<h1 style='color:{st.session_state['text_color']}'>CarbonFree</h1>", unsafe_allow_html=True
     )
+
+# Example usage of set_style function
+def main():
+    set_style()
+    st.write("Welcome to CarbonFree!")
+    st.text_input("Enter your link here:", key="link_input")
+
+if __name__ == "__main__":
+    main()
