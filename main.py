@@ -58,6 +58,7 @@ if st.button("View results"):
 
     firebase.post(f'{modified_domain}/', datasize)
 
+    # CO2 Tier image and tier selection
     if carbon_g <= cutoff[0]:
         image = Image.open('./assets/A+.png')
         tier = "A+"
@@ -77,10 +78,12 @@ if st.button("View results"):
         image = Image.open('./assets/F.png')
         tier = "F"
 
-    st.write("링크를 한번 방문할떄마다 " , carbon_g, "g의 탄소가 발생합니다.")
-
-    carbon_info(carbon_g * 10)
+    # Display basic information
+    st.write("링크를 한번 방문할 때마다 ", carbon_g, "g의 탄소가 발생합니다.")
     st.image(image, width=200)
 
-    if datasize:
-        plot_comparison(datasets, datasize, search_query, tier)
+    # Show additional details in an expander
+    with st.expander("세부분석 더보기"):
+        carbon_info(carbon_g * 10)
+        if datasize:
+            plot_comparison(datasets, datasize, search_query, tier)
